@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0ussiwb" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.1">
+  <bpmn:process id="testColor" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1xbj82i</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="UserTask_15pcfy6" name="Choose Color" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="favoriteColor" label="Favorite Color?" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+            <camunda:value id="brown" name="Brown" />
+            <camunda:value id="blue" name="Blue" />
+            <camunda:value id="green" name="Green" />
+            <camunda:value id="white" name="White" />
+            <camunda:value id="yellow" name="Yellow" />
+          </camunda:formField>
+        </camunda:formData>
+        <camunda:taskListener delegateExpression="${dateAssignmentTask}" event="create" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1xbj82i</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0qlyjly</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="ServiceTask_19lq7ee" name="Record color" camunda:async="true" camunda:delegateExpression="${recordColorTask}">
+      <bpmn:incoming>SequenceFlow_0qlyjly</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1i27don</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_1ecq75r">
+      <bpmn:incoming>SequenceFlow_0250mev</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1xbj82i" sourceRef="StartEvent_1" targetRef="UserTask_15pcfy6" />
+    <bpmn:sequenceFlow id="SequenceFlow_0qlyjly" sourceRef="UserTask_15pcfy6" targetRef="ServiceTask_19lq7ee" />
+    <bpmn:sequenceFlow id="SequenceFlow_1i27don" sourceRef="ServiceTask_19lq7ee" targetRef="Task_06ia23h" />
+    <bpmn:sequenceFlow id="SequenceFlow_0250mev" sourceRef="Task_06ia23h" targetRef="EndEvent_1ecq75r" />
+    <bpmn:userTask id="Task_06ia23h" camunda:assignee="demo">
+      <bpmn:incoming>SequenceFlow_1i27don</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0250mev</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="testColor">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_15pcfy6_di" bpmnElement="UserTask_15pcfy6" bioc:stroke="#8E24AA" bioc:fill="#E1BEE7">
+        <dc:Bounds x="280" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_19lq7ee_di" bpmnElement="ServiceTask_19lq7ee" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2">
+        <dc:Bounds x="450" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1ecq75r_di" bpmnElement="EndEvent_1ecq75r">
+        <dc:Bounds x="762" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1xbj82i_di" bpmnElement="SequenceFlow_1xbj82i">
+        <di:waypoint x="215" y="121" />
+        <di:waypoint x="248" y="121" />
+        <di:waypoint x="248" y="124" />
+        <di:waypoint x="280" y="124" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0qlyjly_di" bpmnElement="SequenceFlow_0qlyjly">
+        <di:waypoint x="380" y="121" />
+        <di:waypoint x="450" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1i27don_di" bpmnElement="SequenceFlow_1i27don">
+        <di:waypoint x="550" y="121" />
+        <di:waypoint x="600" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0250mev_di" bpmnElement="SequenceFlow_0250mev">
+        <di:waypoint x="700" y="121" />
+        <di:waypoint x="762" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0jj41dp_di" bpmnElement="Task_06ia23h">
+        <dc:Bounds x="600" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
